@@ -1,0 +1,104 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             x:Class="ExamenIIIParcial.Views.ListEmployees"
+             Title="{Binding Title}">
+    <ContentPage.ToolbarItems>
+        <ToolbarItem Text="Nuevo pago"
+                     Command="{ Binding  AddCommand}"/>
+    </ContentPage.ToolbarItems>
+    
+        <ScrollView>
+            
+            <StackLayout VerticalOptions="StartAndExpand">
+               
+                <Image Source="{Binding Foto}" IsVisible="{Binding IsEmpty}" VerticalOptions="StartAndExpand"/>
+                <Label Text="Sin pagos registrados."
+                       HorizontalOptions="Center" 
+                       VerticalOptions="End"
+                       IsEnabled="{Binding IsEmpty}"
+                       IsVisible="{Binding IsEmpty}"
+                       HorizontalTextAlignment="Center"
+                       FontSize="25"/>
+               
+                <ListView x:Name="Employees"
+                        ItemsSource="{Binding ListEmployees}"
+                        SelectionMode="None"
+                        Margin="10"
+                          VerticalOptions="StartAndExpand"
+                          HasUnevenRows="True"
+                         IsVisible="{Binding IsNotEmpty}"
+                        IsEnabled="{Binding IsNotEmpty}">
+                    <ListView.ItemTemplate>
+                        <DataTemplate>
+                            <ViewCell>
+                                <Grid x:Name="Item" ColumnSpacing="12">
+                                    <Grid.RowDefinitions>
+                                        <RowDefinition/>
+                                        <RowDefinition/>
+                                        <RowDefinition/>
+                                        <RowDefinition/>
+                                    </Grid.RowDefinitions>
+                                    <Grid.ColumnDefinitions >
+                                        <ColumnDefinition  Width="*"/>
+                                        <ColumnDefinition Width="*"  />
+                                        <ColumnDefinition Width="*"/>
+                                        <ColumnDefinition Width="*" />
+                                    </Grid.ColumnDefinitions>
+
+
+                                    <Label    Style="{StaticResource labelListStyle}"
+                                               Grid.Row="0"
+                                               Grid.Column="0"
+                                              Grid.ColumnSpan="3"
+                                              Text="{Binding Descripcion}"/>
+
+
+
+                                    <Label    Style="{StaticResource labelListStyle}"
+                                               Grid.Row="1"
+                                               Grid.Column="0"
+                                               Grid.ColumnSpan="3">
+                                        <Label.FormattedText>
+                                            <FormattedString>
+                                                <Span Text="Lps. "/>
+                                                <Span Text="{Binding Monto}"/>
+                                            </FormattedString>
+                                        </Label.FormattedText>
+                                    </Label>
+                                    
+                                    <Label    Style="{StaticResource labelListStyle}"
+                                               Grid.Row="3"
+                                               Grid.Column="0"
+                                              Grid.ColumnSpan="3"
+                                              Text="{Binding Fecha}"/>
+                                    
+                                    <ImageButton Source="borrar.png"
+                                             Grid.Row="4"
+                                             Grid.Column="0"
+                                             Grid.ColumnSpan="1" 
+                                            Style="{StaticResource imageButtonStyle}"
+                                            BindingContext="{Binding Source={x:Reference Employees}, Path=BindingContext}" 
+                                            Command="{Binding DeleteCommand}" 
+                                            CommandParameter="{Binding Source={x:Reference Item}, Path=BindingContext}" />
+
+                                    <ImageButton Source="editar.png"
+                                            Grid.Column="2"
+                                            Grid.Row="4"
+                                            Grid.ColumnSpan="1"
+                                            Style="{StaticResource imageButtonStyle}"
+                                            BindingContext="{Binding Source={x:Reference Employees}, Path=BindingContext}" 
+                                            Command="{Binding EditCommand}" 
+                                            CommandParameter="{Binding Source={x:Reference Item}, Path=BindingContext}" />
+                                </Grid>
+                            </ViewCell>
+                        </DataTemplate>
+                    </ListView.ItemTemplate>
+                </ListView>
+            </StackLayout>
+        </ScrollView>
+
+
+
+</ContentPage>
+        
